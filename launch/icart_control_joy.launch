@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+	<arg name="ypspur_params" value="$(find arno)/params/icart-mini.param"/>
+	<include file="$(find arno)/launch/icart_mini_drive.launch" />
+	<include file="$(find arno)/launch/teleop_joy.launch" />
+</launch>

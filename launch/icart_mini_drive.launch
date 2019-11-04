@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="model"               default="$(find xacro)/xacro.py '$(find icart_mini_description)/urdf/icart_mini.xacro'"/>
+  <arg name="ypspur_params"       default="$(find arno)/params/icart-mini.param"/>
+
+  <node name="ypspur_coordinator_bridge" pkg="icart_mini_driver" type="ypspur_coordinator_bridge2" args="$(arg ypspur_params)" output="screen"/>
+
+  <param name="robot_description" command="$(arg model)" />
+
+  <node name="icart_mini_driver_node" pkg="icart_mini_driver" output="screen" type="icart_mini_driver_node"/>
+
+  <include file="$(find icart_mini_control)/launch/icart_mini_control.launch" />
+
+  <!--
+  <node name="odom_tf_publisher" pkg="odom_tf_publisher" type="odom_tf_publisher.py">
+    <remap from="/odom" to="/icart_mini/odom" />
+  </node>
+  -->
+
+</launch>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find arno)/launch/icart_control_joy.launch" />
+    <include file="$(find arno)/launch/sensors.launch" />
+
+    <!--
+	<node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/22C2964FC29626D7/log/nakanoshima" />
+    -->
+
+    <arg name="map_file" default="$(find arno)/map/nakanoshima.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+    <include file="$(find arno)/launch/amcl.launch" />
+    <include file="$(find arno)/launch/move_base.launch" />
+
+    <node pkg="rviz" type="rviz" name="rviz" />
+</launch>
