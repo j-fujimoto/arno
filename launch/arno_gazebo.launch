@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="model" default="$(find xacro)/xacro '$(find arno)/params/arno.xacro'" />
+  <param name="robot_description" command="$(arg model)"/>
+
+  <node pkg="gazebo_ros" type="spawn_model" name="urdf_spawner" respawn="false" output="screen"
+        args="-urdf -model icart_mini -param robot_description -x 0.0 -y 0.5 -z 0.0"/>
+
+  <!-- icart_mini_control.launch -->
+  <rosparam file="$(find icart_mini_control)/config/icart_mini_control.yaml" command="load"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" args="icart_mini joint_state_controller">
+  </node>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+  </node>
+
+  <!-- gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!--
+    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+    -->
+    <arg name="world_name" value="$(find arno)/map/irex.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+</launch>
+

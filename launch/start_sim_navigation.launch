@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find arno)/launch/arno_gazebo.launch" />
+
+    <include file="$(find arno)/launch/move_base.launch" />
+
+    <arg name="is_mapping" default="false"/>
+
+    <group if="$(arg is_mapping)">
+        <include file="$(find arno)/launch/mapping.launch" />
+    </group>
+    <group unless="$(arg is_mapping)">
+        <include file="$(find arno)/launch/amcl.launch" />
+        <arg name="map_file" default="$(find arno)/map/irex_sim.yaml"/>
+        <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+    </group>
+
+    <node pkg="rviz" type="rviz" name="rviz" required="true"/>
+</launch>

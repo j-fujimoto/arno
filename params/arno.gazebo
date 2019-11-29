@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotSimType>icart_mini_gazebo/ICartMiniHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+  <!-- Left Wheel -->
+  <gazebo reference="left_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <!-- Base Link -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <!-- Right Wheel -->
+  <gazebo reference="right_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <!-- hokuyo -->
+  <gazebo reference="laser1">
+    <sensor type="ray" name="head_hokuyo_sensor1">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3 / 4 * ${PI}</min_angle>
+            <max_angle>3 / 4 * ${PI}</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_controller1" filename="libgazebo_ros_laser.so">
+        <topicName>/urg_node1/scan</topicName>
+        <frameName>laser1</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="laser2">
+    <sensor type="ray" name="head_hokuyo_sensor2">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3 / 4 * ${PI}</min_angle>
+            <max_angle>3 / 4 * ${PI}</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_controller2" filename="libgazebo_ros_laser.so">
+        <topicName>/urg_node2/scan</topicName>
+        <frameName>laser2</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!--
+  <gazebo reference="laser3">
+    <sensor type="ray" name="head_hokuyo_sensor3">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>100</samples>
+            <resolution>1</resolution>
+            <min_angle>-105 * ${PI} / 180</min_angle>
+            <max_angle>105 * ${PI} / 180</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>30</samples>
+            <resolution>1</resolution>
+            <min_angle>-5 * ${PI} / 180</min_angle>
+            <max_angle>35 * ${PI} / 180</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_controller3" filename="libgazebo_ros_block_laser.so">
+        <topicName>/hokuyo3d1/hokuyo_cloud</topicName>
+        <frameName>laser3</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="laser4">
+    <sensor type="ray" name="head_hokuyo_sensor4">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>100</samples>
+            <resolution>1</resolution>
+            <min_angle>-105 * ${PI} / 180</min_angle>
+            <max_angle>105 * ${PI} / 180</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>30</samples>
+            <resolution>1</resolution>
+            <min_angle>-5 * ${PI} / 180</min_angle>
+            <max_angle>35 * ${PI} / 180</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_controller4" filename="libgazebo_ros_block_laser.so">
+        <topicName>/hokuyo3d2/hokuyo_cloud</topicName>
+        <frameName>laser4</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+  -->
+</robot>
