@@ -13,9 +13,8 @@
             xmin: -20.0
             ymin: -20.0
         </rosparam>
-        <remap from="/scan" to="/scan_multi" />
-    </node>
         <!--
-	<node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_scan" args="0 0 0 0 0 0 base_footprint base_scan 10" />
-    -->
+        <remap from="/scan" to="/scan_multi" />
+        -->
+    </node>
 </launch>

@@ -31,11 +31,6 @@
 <!--
 	<node pkg="rosbag" type="record" name="recorder" output="screen" args="record -a -o ~/icart_mini" />
 -->
-    <!-- 各フレームの位置関係の設定 argsの順番は (x y z yaw pitch roll parent_id child_id period) -->
-	<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser1" args="0.2 -0.175 0.28 -0.785 0 0 base_link laser1 10" />
-	<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser2" args="-0.2 0.175 0.28 2.356 0 0 base_link laser2 10" />
-	<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser3" args="0.13 -0.19 0.53 -1.57 0 0 base_link laser3 10" />
-	<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4" args="0.13 0.19 0.53 1.57 0 0 base_link laser4 10" />
 
 	<node pkg="usb_cam" type="usb_cam_node" name="usb_cam_node">
 		<param name="video_device" value="/dev/video2" />
