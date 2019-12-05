@@ -3,7 +3,10 @@
 <launch>
     <include file="$(find arno)/launch/icart_control_joy.launch" />
     <include file="$(find arno)/launch/sensors.launch" />
-    <include file="$(find arno)/launch/mapping.launch" />
+
+    <node pkg="gmapping" type="slam_gmapping" name="mapper">
+        <rosparam file="$(find arno)/params/gmapping_params.yaml"/>
+    </node>
 
     <!--
 	<node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/22C2964FC29626D7/log/nakanoshima" />

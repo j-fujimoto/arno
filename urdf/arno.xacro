@@ -5,8 +5,8 @@
   <xacro:property name="PI" value="3.1415926535897931"/>
 
   <!-- Import Rviz colors -->
-  <xacro:include filename="$(find icart_mini_description)/urdf/materials.xacro" />
-  <xacro:include filename="$(find arno)/params/arno.gazebo"/>
+  <xacro:include filename="$(find arno)/urdf/materials.xacro" />
+  <xacro:include filename="$(find arno)/urdf/arno.gazebo"/>
 
   <link name="base_footprint"/>
 
@@ -19,16 +19,16 @@
   <!-- Base Link -->
   <link name="base_link">
     <collision>
-      <origin xyz="-0.15 0 0.1" rpy="0 0 0"/>
+      <origin xyz="-0.17 0 0.1" rpy="0 0 0"/>
       <geometry>
-	    <box size=".485 .43 .15"/>
+	    <box size=".73 .58 .15"/>
       </geometry>
     </collision>
 
     <visual>
-      <origin xyz="-0.15 0 0.1" rpy="0 0 0"/>
+      <origin xyz="-0.17 0 0.1" rpy="0 0 0"/>
       <geometry>
-	    <box size=".485 .43 .15"/>
+	    <box size=".73 .58 .15"/>
       </geometry>
       <material name="orange"/>
     </visual>
@@ -57,13 +57,13 @@
     <collision name="collision">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-         <cylinder  length="0.03" radius="0.0725"/>
+         <cylinder  length="0.03" radius="0.0775"/>
       </geometry>
     </collision>
     <visual name="visual">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder  length="0.03" radius="0.0725"/>
+        <cylinder  length="0.03" radius="0.0775"/>
       </geometry>
     </visual>
     <inertial>
@@ -74,7 +74,7 @@
   </link>
 
   <joint type="revolute" name="left_wheel_hinge">
-    <origin xyz="0 0.15 0.075" rpy="0 0 0"/>
+    <origin xyz="0 0.215 0.075" rpy="0 0 0"/>
     <child link="left_wheel">left_wheel</child>
     <parent link="base_link">base_link</parent>
     <axis xyz="0 1 0"/>
@@ -85,13 +85,13 @@
     <collision name="collision">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-         <cylinder  length="0.03" radius="0.0725"/>
+         <cylinder  length="0.03" radius="0.0775"/>
       </geometry>
     </collision>
     <visual name="visual">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder  length="0.03" radius="0.0725"/>
+        <cylinder  length="0.03" radius="0.0775"/>
       </geometry>
     </visual>
     <inertial>
@@ -102,7 +102,7 @@
   </link>
 
   <joint type="revolute" name="right_wheel_hinge">
-    <origin xyz="0 -0.15 0.075" rpy="0 0 0"/>
+    <origin xyz="0 -0.215 0.075" rpy="0 0 0"/>
     <child link="right_wheel">right_wheel</child>
     <parent link="base_link">base_link</parent>
     <axis xyz="0 1 0"/>
@@ -132,10 +132,17 @@
     </actuator>
   </transmission>
 
+  <joint name="base_scan_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_scan"/>
+    <origin xyz="0.0 0.0 0.3" rpy="0 0 0"/>
+  </joint>
+  <link name="base_scan"/>
+
   <joint name="laser_joint1" type="fixed">
     <parent link="base_link"/>
     <child  link="laser1"/>
-    <origin xyz="0.2 -0.175 0.28" rpy="0 0 -0.785"/>
+    <origin xyz="0.26 0.20 0.78" rpy="0 0 0.785"/>
   </joint>
   <link name="laser1">
     <visual>
@@ -156,7 +163,7 @@
   <joint name="laser_joint2" type="fixed">
     <parent link="base_link"/>
     <child  link="laser2"/>
-    <origin xyz="-0.2 0.175 0.28" rpy="0 0 2.356"/>
+    <origin xyz="-0.26 -0.20 0.78" rpy="0 0 -2.356"/>
   </joint>
   <link name="laser2">
     <visual>

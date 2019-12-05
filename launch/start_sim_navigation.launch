@@ -1,20 +1,40 @@
 <?xml version="1.0"?>
 
 <launch>
-    <include file="$(find arno)/launch/arno_gazebo.launch" />
+    <include file="$(find arno)/launch/arno_gazebo.launch">
+        <arg name="model" value="$(find xacro)/xacro '$(find arno)/urdf/arno.xacro'" />
+    <!--
+        <arg name="model" default="$(find xacro)/xacro '$(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro'" />
+        -->
+        <arg name="world_name" value="$(find arno)/map/irex_sim2.world"/>
+    </include>
 
-    <include file="$(find arno)/launch/move_base.launch" />
+    <include file="$(find arno)/launch/move_base.launch">
+        <arg name="cmd_vel_topic" value="/icart_mini/cmd_vel" />
+        <arg name="move_forward_only" value="false" />
+    </include>
 
     <arg name="is_mapping" default="false"/>
+    <arg name="scan_topic" default="scan"/>
 
     <group if="$(arg is_mapping)">
-        <include file="$(find arno)/launch/mapping.launch" />
+        <node pkg="gmapping" type="slam_gmapping" name="mapper">
+            <rosparam file="$(find arno)/params/gmapping_params.yaml"/>
+        </node>
+        <include file="$(find arno)/launch/teleop_joy.launch" />
     </group>
     <group unless="$(arg is_mapping)">
-        <include file="$(find arno)/launch/amcl.launch" />
-        <arg name="map_file" default="$(find arno)/map/irex_sim.yaml"/>
+        <node pkg="amcl" type="amcl" name="amcl">
+            <rosparam file="$(find arno)/params/amcl_params.yaml"/>
+            <remap from="scan" to="$(arg scan_topic)"/>
+        </node>
+        <arg name="map_file" default="$(find arno)/map/irex_sim2.yaml"/>
+        <!--
+        <arg name="map_file" default="$(find arno)/map/turtle.yaml"/>
+        -->
         <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
     </group>
 
-    <node pkg="rviz" type="rviz" name="rviz" required="true"/>
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find arno)/rviz/arno_navigation.rviz"/>
 </launch>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
-  <arg name="model"               default="$(find xacro)/xacro '$(find arno)/params/arno.xacro'"/>
+  <arg name="model"               default="$(find xacro)/xacro '$(find arno)/urdf/arno.xacro'"/>
   <arg name="ypspur_params"       default="$(find arno)/params/icart-mini.param"/>
 
   <node name="ypspur_coordinator_bridge" pkg="icart_mini_driver" type="ypspur_coordinator_bridge2" args="$(arg ypspur_params)" output="screen"/>

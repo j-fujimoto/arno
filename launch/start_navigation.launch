@@ -10,7 +10,13 @@
 
     <arg name="map_file" default="$(find arno)/map/nakanoshima.yaml"/>
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
-    <include file="$(find arno)/launch/amcl.launch" />
+
+    <arg name="scan_topic" default="scan"/>
+    <node pkg="amcl" type="amcl" name="amcl">
+        <rosparam file="$(find arno)/params/amcl_params.yaml"/>
+        <remap from="scan" to="$(arg scan_topic)"/>
+    </node>
+
     <include file="$(find arno)/launch/move_base.launch" />
 
     <node pkg="rviz" type="rviz" name="rviz" />

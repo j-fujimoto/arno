@@ -10,7 +10,6 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import json
 from geometry_msgs.msg import PoseArray, Pose
 
-# ここに先のプログラムで出力されたリストを書き込む
 waypoints = PoseArray()
 
 def goal_pose(pose):
@@ -60,10 +59,8 @@ if __name__ == '__main__':
                 now = rospy.Time.now()
                 listener.waitForTransform("map", "base_link", now, rospy.Duration(4.0))
 
-                # map座標系の現在位置をｔｆから取得する
                 position, quaternion = listener.lookupTransform("map", "base_link", now)
 
-                # ウェイポイントのゴールの周囲１ｍ以内にロボットが来たら、次のウェイポイントを発行する
                 if(math.sqrt((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ) <= 1):
                     print("next!!")
                     break
