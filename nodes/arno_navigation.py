@@ -7,6 +7,7 @@ import sys
 from nav_msgs.msg import Odometry
 import math
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from actionlib_msgs.msg import GoalStatus
 import json
 from geometry_msgs.msg import PoseArray, Pose
 
@@ -38,7 +39,8 @@ def load_file(fileName):
 if __name__ == '__main__':
     rospy.init_node('arno_navigation')
     pub = rospy.Publisher('waypoints', PoseArray, queue_size=10)
-
+    yo_tolerance = rospy.get_param('move_base/DWAPlannerROS/yaw_goal_tolerance')
+    xy_tolerance = rospy.get_param('move_base/DWAPlannerROS/xy_goal_tolerance')
     if (len(sys.argv) < 2):
         print("Usage " + sys.argv[0] + " fileName")
         quit()
@@ -50,20 +52,22 @@ if __name__ == '__main__':
     client.wait_for_server()
     listener.waitForTransform("map", "base_link", rospy.Time(), rospy.Duration(4.0))
 
-    while True:
+    while not rospy.is_shutdown():
         for pose in waypoints.poses:
             pub.publish(waypoints)
             goal = goal_pose(pose)
             client.send_goal(goal)
-            while True:
+            while not rospy.is_shutdown():
                 now = rospy.Time.now()
                 listener.waitForTransform("map", "base_link", now, rospy.Duration(4.0))
 
                 position, quaternion = listener.lookupTransform("map", "base_link", now)
+                euler = tf.transformations.euler_from_quaternion((quaternion[0], quaternion[1], quaternion[2], quaternion[3]))
+                goal_euler = tf.transformations.euler_from_quaternion((goal.target_pose.pose.orientation.x, goal.target_pose.pose.orientation.y, goal.target_pose.pose.orientation.z, goal.target_pose.pose.orientation.w))
 
-                if(math.sqrt((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ) <= 1):
+                if(math.sqrt((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ) <= xy_tolerance) and (abs(euler[2] - goal_euler[2]) <= yo_tolerance):
                     print("next!!")
                     break
-
                 else:
-                    rospy.sleep(0.5)
+                     rospy.sleep(0.5)
+
