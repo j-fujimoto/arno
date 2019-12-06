@@ -10,8 +10,10 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from actionlib_msgs.msg import GoalStatus
 import json
 from geometry_msgs.msg import PoseArray, Pose
+import dynamic_reconfigure.client
 
 waypoints = PoseArray()
+change_params = []
 
 def goal_pose(pose):
     goal_pose = MoveBaseGoal()
@@ -33,6 +35,10 @@ def load_file(fileName):
             pose.orientation.z = line[1][2]
             pose.orientation.w = line[1][3]
             waypoints.poses.append(pose)
+            if len(line) >= 3:
+                change_params.append(line[2])
+            else:
+                change_params.append(None)
         waypoints.header.frame_id = "map"
     #print(waypoints)
 
@@ -51,12 +57,17 @@ if __name__ == '__main__':
     client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
     client.wait_for_server()
     listener.waitForTransform("map", "base_link", rospy.Time(), rospy.Duration(4.0))
+    dynamic_client = dynamic_reconfigure.client.Client("amcl", timeout=30)
 
     while not rospy.is_shutdown():
-        for pose in waypoints.poses:
+        for i in range(len(waypoints.poses)):
+            pose = waypoints.poses[i]
             pub.publish(waypoints)
             goal = goal_pose(pose)
             client.send_goal(goal)
+            if not change_params[i] == None:
+                dynamic_client.update_configuration(change_params[i])
+
             while not rospy.is_shutdown():
                 now = rospy.Time.now()
                 listener.waitForTransform("map", "base_link", now, rospy.Duration(4.0))
