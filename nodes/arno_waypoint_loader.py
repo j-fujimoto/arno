@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from move_base_msgs.msg import MoveBaseActionGoal
+from move_base_msgs.msg import MoveBaseActionGoal, MoveBaseGoal
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import PoseArray, Pose
 from std_msgs.msg import Int16
@@ -62,6 +62,16 @@ def goalCallback(data):
     rewriteMarker()
     pub.publish(waypoints)
 
+def fileCallback(data):
+#pos = data.goal.target_pose.pose
+    global pub
+    global waypoints
+    waypoints.poses.append(data.target_pose.pose)
+    printWaypoints()
+    updateWaypointjson()
+    rewriteMarker()
+    pub.publish(waypoints)
+
 def removeCallback(removeId):
     global pub
     global waypoints
@@ -97,6 +107,7 @@ def listener():
     rospy.init_node('goal_sub', anonymous=True)
 
     rospy.Subscriber("/move_base/goal", MoveBaseActionGoal, goalCallback)
+    rospy.Subscriber("/file", MoveBaseGoal, fileCallback)
     rospy.Subscriber("/remove", Int16, removeCallback)
     rospy.Subscriber("/insert", Int16, insertCallback)
     pub = rospy.Publisher('waypoints', PoseArray, queue_size=10)

@@ -4,11 +4,9 @@
     <include file="$(find arno)/launch/icart_control_joy.launch" />
     <include file="$(find arno)/launch/sensors.launch" />
 
-    <!--
-	<node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/22C2964FC29626D7/log/nakanoshima" />
-    -->
+    <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/samsung/log/ohgimachi" />
 
-    <arg name="map_file" default="$(find arno)/map/nakanoshima.yaml"/>
+    <arg name="map_file" default="$(find arno)/map/ohgimachi_3.yaml"/>
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <arg name="scan_topic" default="scan"/>
@@ -17,7 +15,10 @@
         <remap from="scan" to="$(arg scan_topic)"/>
     </node>
 
-    <include file="$(find arno)/launch/move_base.launch" />
+    <include file="$(find arno)/launch/move_base.launch">
+        <arg name="cmd_vel_topic" default="/icart_mini/cmd_vel" />
+        <arg name="move_forward_only" value="false" />
+    </include>
 
     <node pkg="rviz" type="rviz" name="rviz" />
 </launch>
