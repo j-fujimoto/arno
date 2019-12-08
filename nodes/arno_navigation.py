@@ -75,10 +75,12 @@ if __name__ == '__main__':
                 position, quaternion = listener.lookupTransform("map", "base_link", now)
                 euler = tf.transformations.euler_from_quaternion((quaternion[0], quaternion[1], quaternion[2], quaternion[3]))
                 goal_euler = tf.transformations.euler_from_quaternion((goal.target_pose.pose.orientation.x, goal.target_pose.pose.orientation.y, goal.target_pose.pose.orientation.z, goal.target_pose.pose.orientation.w))
-
-                if(math.sqrt((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ) <= xy_tolerance) and (abs(euler[2] - goal_euler[2]) <= yo_tolerance):
+                print("dis =  "+str((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ))
+                print("rad = "+str(abs(euler[2] - goal_euler[2])))
+                client.wait_for_result(rospy.Duration(0.5))
+                if((math.sqrt((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ) <= xy_tolerance) and (abs(euler[2] - goal_euler[2]) <= yo_tolerance)) or (client.get_result()):
                     print("next!!")
                     break
-                else:
-                     rospy.sleep(0.5)
+#                else:
+#                     rospy.sleep(0.5)
 
