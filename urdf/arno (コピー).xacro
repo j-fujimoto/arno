@@ -142,7 +142,7 @@
   <joint name="laser_joint1" type="fixed">
     <parent link="base_link"/>
     <child  link="laser1"/>
-    <origin xyz="0.08 0.20 0.78" rpy="0 0 0.785"/>
+    <origin xyz="0.26 0.20 0.78" rpy="0 0 0.785"/>
   </joint>
   <link name="laser1">
     <visual>
@@ -163,7 +163,7 @@
   <joint name="laser_joint2" type="fixed">
     <parent link="base_link"/>
     <child  link="laser2"/>
-    <origin xyz="-0.46 -0.20 0.78" rpy="0 0 -2.356"/>
+    <origin xyz="-0.26 -0.20 0.78" rpy="0 0 -2.356"/>
   </joint>
   <link name="laser2">
     <visual>
@@ -184,7 +184,7 @@
   <joint name="laser_joint3" type="fixed">
     <parent link="base_link"/>
     <child  link="laser3"/>
-    <origin xyz="-0.10 -0.19 0.53" rpy="0 0 -1.57"/>
+    <origin xyz="0.13 -0.19 0.53" rpy="0 0 -1.57"/>
   </joint>
   <link name="laser3">
     <visual>
@@ -205,7 +205,7 @@
   <joint name="laser_joint4" type="fixed">
     <parent link="base_link"/>
     <child  link="laser4"/>
-    <origin xyz="-0.10 0.19 0.53" rpy="0 0 1.57"/>
+    <origin xyz="0.13 0.19 0.53" rpy="0 0 1.57"/>
   </joint>
   <link name="laser4">
     <visual>
@@ -226,7 +226,7 @@
   <joint name="laser_joint5" type="fixed">
     <parent link="base_link"/>
     <child  link="laser5"/>
-    <origin xyz="-0.04 0.0 0.68" rpy="3.14 0 0"/>
+    <origin xyz="0.20 0.0 0.68" rpy="3.14 0 0"/>
   </joint>
   <link name="laser5">
     <visual>

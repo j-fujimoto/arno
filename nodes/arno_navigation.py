@@ -42,6 +42,14 @@ def load_file(fileName):
         waypoints.header.frame_id = "map"
     #print(waypoints)
 
+def angle_dif(target, current):
+    diff = target - current
+    if (diff > math.pi):
+        diff -= 2 * math.pi
+    elif(diff < -math.pi):
+        diff += 2 * math.pi
+    return abs(diff)
+
 if __name__ == '__main__':
     rospy.init_node('arno_navigation')
     pub = rospy.Publisher('waypoints', PoseArray, queue_size=10)
@@ -76,9 +84,9 @@ if __name__ == '__main__':
                 euler = tf.transformations.euler_from_quaternion((quaternion[0], quaternion[1], quaternion[2], quaternion[3]))
                 goal_euler = tf.transformations.euler_from_quaternion((goal.target_pose.pose.orientation.x, goal.target_pose.pose.orientation.y, goal.target_pose.pose.orientation.z, goal.target_pose.pose.orientation.w))
                 print("dis =  "+str((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ))
-                print("rad = "+str(abs(euler[2] - goal_euler[2])))
-                client.wait_for_result(rospy.Duration(0.5))
-                if((math.sqrt((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ) <= xy_tolerance) and (abs(euler[2] - goal_euler[2]) <= yo_tolerance)) or (client.get_result()):
+                print("rad = "+str(angle_dif(goal_euler[2], euler[2])))
+                client.wait_for_result(rospy.Duration(0.1))
+                if((math.sqrt((position[0]-goal.target_pose.pose.position.x)**2 + (position[1]-goal.target_pose.pose.position.y)**2 ) <= xy_tolerance) and (angle_dif(goal_euler[2], euler[2]) <= yo_tolerance)) or (client.get_result()):
                     print("next!!")
                     break
 #                else:

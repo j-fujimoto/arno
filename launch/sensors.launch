@@ -11,6 +11,8 @@
 		<param name="frame_id" value="/laser2" />
 		<remap from="/scan" to="/urg_node2/scan" />
 	</node>
+
+<!--
 	<node pkg="hokuyo3d" type="hokuyo3d" name="hokuyo3d1">
 		<param name="ip" value="192.168.0.12" />
 		<param name="frame_id" value="/laser3" />
@@ -18,6 +20,11 @@
 	<node pkg="hokuyo3d" type="hokuyo3d" name="hokuyo3d2">
 		<param name="ip" value="192.168.0.13" />
 		<param name="frame_id" value="/laser4" />
+	</node>
+-->
+	<node pkg="hokuyo3d" type="hokuyo3d" name="hokuyo3d3">
+		<param name="ip" value="192.168.0.14" />
+		<param name="frame_id" value="/laser5" />
 	</node>
 
     <!-- combine scan datas -->
@@ -30,11 +37,11 @@
 
 <!--
 	<node pkg="rosbag" type="record" name="recorder" output="screen" args="record -a -o ~/icart_mini" />
--->
 
 	<node pkg="usb_cam" type="usb_cam_node" name="usb_cam_node">
 		<param name="video_device" value="/dev/video2" />
         <param name="pixel_format" value="mjpeg" />
 	</node>
 
+-->
 </launch>

@@ -1,6 +1,6 @@
 delta: 0.05
-maxUrange: 20.0
-maxRange: 40.0
+maxUrange: 10.0
+maxRange: 11.0
 xmax: 20.0
 ymax: 20.0
 xmin: -20.0
