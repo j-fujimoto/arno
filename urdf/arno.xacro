@@ -57,13 +57,13 @@
     <collision name="collision">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-         <cylinder  length="0.03" radius="0.0775"/>
+         <cylinder  length="0.03" radius="0.1397"/>
       </geometry>
     </collision>
     <visual name="visual">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder  length="0.03" radius="0.0775"/>
+        <cylinder  length="0.03" radius="0.1397"/>
       </geometry>
     </visual>
     <inertial>
@@ -85,13 +85,13 @@
     <collision name="collision">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-         <cylinder  length="0.03" radius="0.0775"/>
+         <cylinder  length="0.03" radius="0.1397"/>
       </geometry>
     </collision>
     <visual name="visual">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder  length="0.03" radius="0.0775"/>
+        <cylinder  length="0.03" radius="0.1397"/>
       </geometry>
     </visual>
     <inertial>

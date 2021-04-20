@@ -8,9 +8,7 @@
         <rosparam file="$(find arno)/params/gmapping_params.yaml"/>
     </node>
 
- <!-- 
-	<node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/samsung/log/ohgimachi" />
--->
+	<!--<node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/samsung/log/nakanoshima" />-->
     
 	<node pkg="rviz" type="rviz" name="rviz" required="true" />
 </launch>

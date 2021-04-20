@@ -4,9 +4,13 @@
     <include file="$(find arno)/launch/icart_control_joy.launch" />
     <include file="$(find arno)/launch/sensors.launch" />
 
-	<node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/samsung/log/irex" />
-
-    <arg name="map_file" default="$(find arno)/map/irex.yaml"/>
+<!--
+    <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/samsung/log/irex" />
+    <node pkg="rosbag" type="record" name="recorder" output="screen" args="-a -o /media/hokuyo/samsung/log/nakanoshima" />
+    <arg name="map_file" default="$(find arno)/map/hokuyo_entrance.yaml"/>
+    <arg name="map_file" default="$(find arno)/map/gijutsu1.yaml"/>
+-->
+    <arg name="map_file" default="$(find arno)/map/ohgimachi_veryshort.yaml"/>
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <arg name="scan_topic" default="scan"/>

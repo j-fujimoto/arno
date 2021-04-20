@@ -15,7 +15,7 @@
     </include>
 
     <arg name="is_mapping" default="false"/>
-    <arg name="scan_topic" default="scan"/>
+    <arg name="scan_topic" default="/urg_node1/scan"/>
 
     <group if="$(arg is_mapping)">
         <node pkg="gmapping" type="slam_gmapping" name="mapper">

@@ -23,7 +23,7 @@
 	</node>
 -->
 	<node pkg="hokuyo3d" type="hokuyo3d" name="hokuyo3d3">
-		<param name="ip" value="192.168.0.14" />
+		<param name="ip" value="192.168.0.12" />
 		<param name="frame_id" value="/laser5" />
 	</node>
 
